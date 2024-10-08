@@ -1,0 +1,12 @@
+{
+  "name": "limit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client": "pnpm --filter client-limit dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
