@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client": "pnpm --filter client-limit dev"
+    "client": "pnpm --filter client-limit dev",
+    "backend": "npm run start:dev:mmkmetiz"
   },
   "keywords": [],
   "author": "",
