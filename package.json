@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "client": "pnpm --filter client-limit dev",
-    "backend": "npm run start:dev:mmkmetiz"
+    "backend": "pnpm run start:dev:mmkmetiz"
   },
   "keywords": [],
   "author": "",
