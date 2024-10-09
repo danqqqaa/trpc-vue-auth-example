@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="text-2xl bg-red-1000 p-4">
+    here
+  </div>
 </template>

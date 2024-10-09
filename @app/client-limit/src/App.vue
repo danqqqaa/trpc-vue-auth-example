@@ -4,7 +4,7 @@ import Layout from './layouts/Layout.vue'
 </script>
 
 <template>
-  <Layout><RouterView /></Layout>
+  <RouterView />
 </template>
 
 <style scoped></style>

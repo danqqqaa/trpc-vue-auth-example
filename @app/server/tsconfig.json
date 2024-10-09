@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+      "target": "es2022",
+      "module": "commonjs",
+      "baseUrl": "src",
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "outDir": "build",
+      "skipLibCheck": true,
+      "resolveJsonModule": true,
+      "composite": true,
+      "declaration": true,
+      "noUnusedLocals": true
+    },
+    "exclude": ["node_modules", "jest.config.ts", "build"]
+  }
+  
