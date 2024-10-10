@@ -11,11 +11,12 @@ function getUser() {
   })
 }
 
-const data = getUser();
+const { data, isLoading, status } = getUser();
+
 </script>
 
 <template>
-  <div class="text-2xl bg-red-1000 p-4">
-    {{ data }}
+  <div class="text-2xl bg-red-500 p-4">
+   {{data}}
   </div>
 </template>
