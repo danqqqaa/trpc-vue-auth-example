@@ -8,7 +8,7 @@ import cors from 'cors';
 
 async function startServer() {
   try {
-
+    
     const httpServer = createHTTPServer({
       router: appRouter,
       middleware: cors(),

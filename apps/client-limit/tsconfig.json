@@ -6,12 +6,17 @@
     },
     {
       "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "../server-limit/tsconfig.json"
     }
   ],
     "compilerOptions": {
       "baseUrl": ".",
       "paths": {
-        "@/*": ["./*"]
+        "@/*": ["./*"],
+        "@app/*": ["../*"],
       }
-    }
+    },
+   
 }

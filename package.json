@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "pnpm --filter server dev",
-    "client": "pnpm --filter client dev"
-
+    "server": "pnpm --filter ./apps/server-limit dev",
+    "client": "pnpm --filter client dev",
+    "dev": "pnpm --filter \"./apps/**\" dev"
   },
   "workspaces": [
-    "@app/client-limit",
-    "@app/server-limit"
+    "apps/client-limit",
+    "apps/server-limit"
   ],
   "keywords": [],
   "author": "",
