@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "pnpm --filter ./apps/server-limit dev",
+    "server": "pnpm --filter server-limit dev",
     "client": "pnpm --filter client-limit dev",
     "dev": "pnpm --filter \"./apps/**\" dev"
   },
