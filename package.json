@@ -8,10 +8,6 @@
     "client": "pnpm --filter client-limit dev",
     "dev": "pnpm --filter \"./apps/**\" dev"
   },
-  "workspaces": [
-    "apps/client-limit",
-    "apps/server-limit"
-  ],
   "keywords": [],
   "author": "",
   "license": "ISC",

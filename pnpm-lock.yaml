@@ -12,110 +12,6 @@ importers:
         specifier: ^10.45.2
         version: 10.45.2
 
-  '@app/client-limit':
-    dependencies:
-      '@tanstack/vue-query':
-        specifier: ^5.59.1
-        version: 5.59.1(vue@3.5.11(typescript@5.4.5))
-      '@trpc/client':
-        specifier: ^10.45.2
-        version: 10.45.2(@trpc/server@10.45.2)
-      class-variance-authority:
-        specifier: ^0.7.0
-        version: 0.7.0
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      lucide-react:
-        specifier: ^0.451.0
-        version: 0.451.0(react@18.3.1)
-      tailwind-merge:
-        specifier: ^2.5.3
-        version: 2.5.3
-      tailwindcss:
-        specifier: ^3.4.13
-        version: 3.4.13(ts-node@10.9.2(@types/node@20.16.11)(typescript@5.4.5))
-      tailwindcss-animate:
-        specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.13(ts-node@10.9.2(@types/node@20.16.11)(typescript@5.4.5)))
-      vue:
-        specifier: ^3.4.29
-        version: 3.5.11(typescript@5.4.5)
-      vue-router:
-        specifier: ^4.3.3
-        version: 4.4.5(vue@3.5.11(typescript@5.4.5))
-    devDependencies:
-      '@rushstack/eslint-patch':
-        specifier: ^1.8.0
-        version: 1.10.4
-      '@tsconfig/node20':
-        specifier: ^20.1.4
-        version: 20.1.4
-      '@types/node':
-        specifier: ^20.14.5
-        version: 20.16.11
-      '@types/tailwindcss':
-        specifier: ^3.1.0
-        version: 3.1.0(ts-node@10.9.2(@types/node@20.16.11)(typescript@5.4.5))
-      '@vitejs/plugin-vue':
-        specifier: ^5.0.5
-        version: 5.1.4(vite@5.4.8(@types/node@20.16.11)(terser@5.34.1))(vue@3.5.11(typescript@5.4.5))
-      '@vue/eslint-config-prettier':
-        specifier: ^9.0.0
-        version: 9.0.0(@types/eslint@9.6.1)(eslint@8.57.1)(prettier@3.3.3)
-      '@vue/eslint-config-typescript':
-        specifier: ^13.0.0
-        version: 13.0.0(eslint-plugin-vue@9.28.0(eslint@8.57.1))(eslint@8.57.1)(typescript@5.4.5)
-      '@vue/tsconfig':
-        specifier: ^0.5.1
-        version: 0.5.1
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.1
-      eslint-plugin-vue:
-        specifier: ^9.23.0
-        version: 9.28.0(eslint@8.57.1)
-      npm-run-all2:
-        specifier: ^6.2.0
-        version: 6.2.3
-      prettier:
-        specifier: ^3.2.5
-        version: 3.3.3
-      typescript:
-        specifier: ~5.4.0
-        version: 5.4.5
-      vite:
-        specifier: ^5.3.1
-        version: 5.4.8(@types/node@20.16.11)(terser@5.34.1)
-      vue-tsc:
-        specifier: ^2.0.21
-        version: 2.1.6(typescript@5.4.5)
-
-  '@app/server':
-    dependencies:
-      '@trpc/server':
-        specifier: ^10.45.2
-        version: 10.45.2
-      '@types/cors':
-        specifier: ^2.8.17
-        version: 2.8.17
-      cors:
-        specifier: ^2.8.5
-        version: 2.8.5
-      nodemon:
-        specifier: ^3.1.7
-        version: 3.1.7
-      ts-node:
-        specifier: ^10.9.2
-        version: 10.9.2(@types/node@20.16.11)(typescript@5.5.4)
-    devDependencies:
-      '@types/express':
-        specifier: ^5.0.0
-        version: 5.0.0
-      typescript:
-        specifier: 5.5.4
-        version: 5.5.4
-
   apps/client-limit:
     dependencies:
       '@tanstack/vue-query':
@@ -209,18 +105,9 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
-      drizzle-orm:
-        specifier: ^0.34.1
-        version: 0.34.1(@types/pg@8.11.10)(pg@8.13.0)(react@18.3.1)
-      env-var:
-        specifier: ^7.5.0
-        version: 7.5.0
       nodemon:
         specifier: ^3.1.7
         version: 3.1.7
-      pg:
-        specifier: ^8.13.0
-        version: 8.13.0
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.16.11)(typescript@5.5.4)
@@ -228,18 +115,31 @@ importers:
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
-      '@types/pg':
-        specifier: ^8.11.10
-        version: 8.11.10
-      drizzle-kit:
-        specifier: ^0.25.0
-        version: 0.25.0
       tsx:
         specifier: ^4.19.1
         version: 4.19.1
       typescript:
         specifier: 5.5.4
         version: 5.5.4
+
+  packages/db:
+    dependencies:
+      drizzle-orm:
+        specifier: ^0.34.1
+        version: 0.34.1(@types/pg@8.11.10)(pg@8.13.0)(react@18.3.1)
+      env-var:
+        specifier: ^7.5.0
+        version: 7.5.0
+      pg:
+        specifier: ^8.13.0
+        version: 8.13.0
+    devDependencies:
+      '@types/pg':
+        specifier: ^8.11.10
+        version: 8.11.10
+      drizzle-kit:
+        specifier: ^0.25.0
+        version: 0.25.0
 
 packages:
 

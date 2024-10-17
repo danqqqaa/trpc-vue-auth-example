@@ -1,8 +1,8 @@
 import { defineConfig } from "drizzle-kit";
-import { dbConfig } from "../config/db.config";
+import { dbConfig } from "./db.config";
 
 export default defineConfig({
-  schema: "./src/schema.ts",
+  schema: "./schema.ts",
   out: "./migrations",
   dialect: "postgresql",
   dbCredentials: {
@@ -15,4 +15,7 @@ export default defineConfig({
   },
   verbose: true,
   strict: true,
+  migrations: {
+    prefix: 'timestamp',
+  },
 });

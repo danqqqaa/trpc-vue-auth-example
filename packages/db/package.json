@@ -1,0 +1,22 @@
+{
+  "name": "packages",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.13.0",
+    "env-var": "^7.5.0",
+    "drizzle-orm": "^0.34.1"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.25.0",
+    "@types/pg": "^8.11.10"
+  }
+}

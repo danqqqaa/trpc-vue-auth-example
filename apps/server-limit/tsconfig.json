@@ -11,7 +11,10 @@
       "resolveJsonModule": true,
       "composite": true,
       "declaration": true,
-      "noUnusedLocals": true
+      "noUnusedLocals": true,
+      "paths": {
+        "@trpc": ["./src/trpc/trpc.ts"],
+      },
     },
     "exclude": ["node_modules", "jest.config.ts", "build"]
   }

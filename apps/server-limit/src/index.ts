@@ -1,6 +1,6 @@
 
 import appRouter from "./router";
-import  createContext from './trpc/context'
+import  createContext from '../src/trpc/context'
 import { createHTTPServer } from '@trpc/server/adapters/standalone';
 import cors from 'cors';
 
