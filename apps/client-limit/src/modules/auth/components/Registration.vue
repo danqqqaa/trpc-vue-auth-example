@@ -5,26 +5,21 @@ import { Label } from '@/shared/ui/label'
 import Button from '@/shared/ui/button/Button.vue'
 import { Eye, EyeOff } from 'lucide-vue-next'
 import { useRegister } from '../composables/use-register'
-import { registerSchema } from "packages/z/auth";
-
+import { registerSchema } from 'packages/z/auth'
 
 const passwordVisible = ref(false)
 const confirmPasswordVisible = ref(false)
 
-
 const { mutate, error } = useRegister()
 
 const register = () => {
-
   const reg = registerSchema.safeParse(registerForm.value)
-  console.log(reg);
-  
+  console.log(reg)
+
   // mutate(toValue(registerForm), {
-  
+
   // })
 }
-
-
 
 const registerForm = ref({
   name: '',
@@ -54,7 +49,10 @@ const registerForm = ref({
     </div>
     <div class="relative">
       <Label>Подтвердите пароль</Label>
-      <Input v-model="registerForm.confirmPassword" :type="confirmPasswordVisible ? 'text' : 'password'">
+      <Input
+        v-model="registerForm.confirmPassword"
+        :type="confirmPasswordVisible ? 'text' : 'password'"
+      >
       </Input>
       <Button
         variant="ghost"

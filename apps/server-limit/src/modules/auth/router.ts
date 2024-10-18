@@ -1,9 +1,9 @@
 import { router, procedure } from "../../trpc/trpc";
 import { authService } from "./service";
-import { RegisterDtoSchema } from "./schemas/schema";
+import { registerSchema } from "packages/z/auth";
 
 export const authRouter = router({
-  register: procedure.input(RegisterDtoSchema).mutation(async (opts) => {
+  register: procedure.input(registerSchema).mutation(async (opts) => {
     console.log(opts);
     return await authService.register();
   }),
