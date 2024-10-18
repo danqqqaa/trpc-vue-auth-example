@@ -2,9 +2,9 @@
 import { useTRPC } from '@/trpc-client';
 import { useQuery } from '@tanstack/vue-query';
 
-function getUser() {
-  const trpc = useTRPC();
+const trpc = useTRPC();
 
+function getUser() {
   return useQuery({
     queryFn: () => trpc.user.getUsers.query(),
     queryKey: ['users'],
@@ -12,6 +12,8 @@ function getUser() {
 }
 
 const { data, isLoading, status } = getUser();
+
+
 
 </script>
 

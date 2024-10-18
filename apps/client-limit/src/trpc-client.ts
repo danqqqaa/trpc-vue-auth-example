@@ -1,10 +1,8 @@
 import { createTRPCProxyClient, httpLink } from '@trpc/client';
-import { type AppRouter } from '@apps/server-limit/router';
+import { type AppRouter } from 'apps/server-limit/src/router';
 import { config } from '@/config/config';
 
-export function useTRPC() {
-  console.log(config);
-  
+export function useTRPC() {  
   return createTRPCProxyClient<AppRouter>({
     links: [
       httpLink({
