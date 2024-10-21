@@ -11,5 +11,11 @@
       "path": "../server-limit/tsconfig.json"
     }
   ],
-
+  // "compilerOptions": {
+  //   "paths": {
+  //     "packages/*": [
+  //       "../../packages/*"
+  //     ]
+  //   }
+  // }
 }

@@ -11,8 +11,7 @@
     "rootDir": "../../",
     "paths": {
       "@/*": ["./src/*"],
-      "@apps/*": ["../server-limit/src/*"],
-      "packages/*":["../../packages/*"]
+      "@packages/*": ["../../packages/*"]
     },
 
     /* Bundler mode */

@@ -5,20 +5,24 @@ import { Label } from '@/shared/ui/label'
 import Button from '@/shared/ui/button/Button.vue'
 import { Eye, EyeOff } from 'lucide-vue-next'
 import { useRegister } from '../composables/use-register'
-import { registerSchema } from 'packages/z/auth'
+import { registerSchema } from '@/../../../packages/z/auth'
 
 const passwordVisible = ref(false)
 const confirmPasswordVisible = ref(false)
-
 const { mutate, error } = useRegister()
+const parseError = ref<Zod.ZodError | null>(null)
 
 const register = () => {
   const reg = registerSchema.safeParse(registerForm.value)
-  console.log(reg)
+  if (reg.error) {
+    parseError.value = reg.error
+    console.log(parseError.value);
+    
+  }
 
-  // mutate(toValue(registerForm), {
+  mutate(toValue(registerForm), {
 
-  // })
+  })
 }
 
 const registerForm = ref({

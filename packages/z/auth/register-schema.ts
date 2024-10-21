@@ -12,3 +12,5 @@ export const schema = z
     message: 'Пароли должны совпадать!',
     path: ['confirmPassword'],
   });
+
+export type schemaType = z.infer<typeof schema>
