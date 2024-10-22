@@ -1,46 +1,50 @@
 <script setup lang="ts">
-import { ref, toValue } from 'vue'
-import { Input } from '@/shared/ui/input'
-import { Label } from '@/shared/ui/label'
-import Button from '@/shared/ui/button/Button.vue'
-import { Eye, EyeOff } from 'lucide-vue-next'
-import { useRegister } from '../composables/use-register'
-import { registerSchema } from 'z-limit/auth'
+  import { ref, toValue } from 'vue'
+  import { Input } from '@/shared/ui/input'
+  import { Label } from '@/shared/ui/label'
+  import Button from '@/shared/ui/button/Button.vue'
+  import { Eye, EyeOff } from 'lucide-vue-next'
+  import { useRegister } from '../composables/use-register'
+  import { registerSchema } from 'z-limit/auth'
+  import { useToast } from '@/shared/ui/toast/use-toast'
 
-const passwordVisible = ref(false)
-const confirmPasswordVisible = ref(false)
-const { mutate, error } = useRegister()
-const parseError = ref<Zod.ZodError | null>(null)
+  const passwordVisible = ref(false)
+  const confirmPasswordVisible = ref(false)
 
-const register = () => {
-  const reg = registerSchema.safeParse(registerForm.value)
-  if (reg.error) {
-    parseError.value = reg.error
-    console.log(parseError.value);
-    
-  }
+  const { toast } = useToast()
+  const { mutate } = useRegister()
 
-  mutate(toValue(registerForm), {
-
+  const registerForm = ref({
+    name: '',
+    password: '',
+    confirmPassword: ''
   })
-}
 
-const registerForm = ref({
-  name: '',
-  password: '',
-  confirmPassword: ''
-})
+  const register = () => {
+    const reg = registerSchema.safeParse(toValue(registerForm))
+    if (!reg.success) {
+      const errorMessages = reg.error.issues
+      for (let _error of errorMessages) {
+        toast({
+          title: 'Ошибка регистрации',
+          description: _error.message,
+          variant: 'destructive',
+          duration: 3000
+        })
+      }
+    } else mutate(toValue(registerForm))
+  }
 </script>
 
 <template>
   <div class="grid gap-1">
     <div>
       <Label>Имя</Label>
-      <Input v-model="registerForm.name"> </Input>
+      <Input v-model="registerForm.name"></Input>
     </div>
     <div class="relative">
       <Label>Пароль</Label>
-      <Input v-model="registerForm.password" :type="passwordVisible ? 'text' : 'password'"> </Input>
+      <Input v-model="registerForm.password" :type="passwordVisible ? 'text' : 'password'"></Input>
       <Button
         variant="ghost"
         size="icon"
@@ -56,8 +60,7 @@ const registerForm = ref({
       <Input
         v-model="registerForm.confirmPassword"
         :type="confirmPasswordVisible ? 'text' : 'password'"
-      >
-      </Input>
+      ></Input>
       <Button
         variant="ghost"
         size="icon"
