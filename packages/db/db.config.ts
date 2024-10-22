@@ -1,4 +1,4 @@
-import * as env from 'env-var';
+import env from 'env-var';
 
 export const dbConfig = {
   database: env.get('PG_DATABASE').default('limit').asString(),
@@ -10,3 +10,4 @@ export const dbConfig = {
 };
 
 
+ 
