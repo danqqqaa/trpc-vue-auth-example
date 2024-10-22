@@ -11,9 +11,6 @@ importers:
       '@trpc/server':
         specifier: ^10.45.2
         version: 10.45.2
-      typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
 
   apps/client-limit:
     dependencies:
@@ -123,6 +120,12 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      env-var:
+        specifier: ^7.5.0
+        version: 7.5.0
+      jose:
+        specifier: ^5.9.6
+        version: 5.9.6
       nodemon:
         specifier: ^3.1.7
         version: 3.1.7
@@ -133,6 +136,9 @@ importers:
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
+      db-limit:
+        specifier: workspace:*
+        version: link:../../packages/db
       tsx:
         specifier: ^4.19.1
         version: 4.19.1
@@ -1748,6 +1754,9 @@ packages:
     resolution: {integrity: sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==}
     hasBin: true
 
+  jose@5.9.6:
+    resolution: {integrity: sha512-AMlnetc9+CV9asI19zHmrgS/WYsWUwCn2R7RzlbJWD7F9eWYUTGyBmU9o6PxngtLGOiDGPRu+Uc4fhKzbpteZQ==}
+
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -2326,11 +2335,6 @@ packages:
 
   typescript@5.5.4:
     resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-
-  typescript@5.6.3:
-    resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -3843,6 +3847,8 @@ snapshots:
 
   jiti@1.21.6: {}
 
+  jose@5.9.6: {}
+
   js-tokens@4.0.0: {}
 
   js-yaml@4.1.0:
@@ -4421,8 +4427,6 @@ snapshots:
   typescript@5.4.5: {}
 
   typescript@5.5.4: {}
-
-  typescript@5.6.3: {}
 
   undefsafe@2.0.5: {}
 
