@@ -1,4 +1,5 @@
 {
+  // "extends": "../../tsconfig.json",
     "compilerOptions": {
       "target": "es2022",
       "module": "commonjs",
@@ -12,13 +13,13 @@
       "composite": true,
       "declaration": true,
       "noUnusedLocals": true,
-      "rootDirs": ["../../", "../../packages/**/*"],
+      "rootDir": "../../",
       "paths": {
-        "@trpc": ["./src/trpc/trpc.ts"],
-        "packages/*": ["../../packages"]
+        "@/*": ["./src/*"],
       },
     },
     "exclude": ["node_modules", "jest.config.ts", "build"],
-    // "include": ["../../packages/**/*"],
+    // "include": ["../../packages/z/*"],
+    "include": ["src/**/*", "../../packages/**/*"],
   }
   

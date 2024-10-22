@@ -1,6 +1,6 @@
 import { router, procedure } from "../../trpc/trpc";
 import { authService } from "./service";
-import { registerSchema } from "../../../../../packages/z/auth";
+import { registerSchema } from "z-limit";
 
 export const authRouter = router({
   register: procedure.input(registerSchema).mutation(async (opts) => {

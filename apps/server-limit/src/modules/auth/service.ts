@@ -1,9 +1,8 @@
-import { registerSchema } from "../../../../../packages/z/auth";
 
 
 
 export class AuthService {
-    async register(opts) {
+    async register(opts: any) {
         return {id: 1};
     }
 }

@@ -1,3 +1,3 @@
-import { schema as registerSchema, schemaType  } from './register-schema';
+import { schema as registerSchema, schemaType  as registerSchemaType } from './register-schema';
 
-export { registerSchema, schemaType }
+export { registerSchema, type registerSchemaType }

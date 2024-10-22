@@ -1,5 +1,5 @@
 import { createTRPCProxyClient, httpLink } from '@trpc/client';
-import { type AppRouter } from '@apps/server-limit/src/router';
+import { type AppRouter } from '@server/router';
 import { config } from '@/config/config';
 
 export function useTRPC() {  

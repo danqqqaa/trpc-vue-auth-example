@@ -5,7 +5,7 @@ import { Label } from '@/shared/ui/label'
 import Button from '@/shared/ui/button/Button.vue'
 import { Eye, EyeOff } from 'lucide-vue-next'
 import { useRegister } from '../composables/use-register'
-import { registerSchema } from '@/../../../packages/z/auth'
+import { registerSchema } from 'z-limit/auth'
 
 const passwordVisible = ref(false)
 const confirmPasswordVisible = ref(false)
