@@ -12,7 +12,7 @@
   const confirmPasswordVisible = ref(false)
 
   const { toast } = useToast()
-  const { mutate } = useRegister()
+  const { mutate, isError } = useRegister()
 
   const registerForm = ref({
     name: '',
@@ -33,6 +33,7 @@
         })
       }
     } else mutate(toValue(registerForm))
+    console.log(isError);
   }
 </script>
 
