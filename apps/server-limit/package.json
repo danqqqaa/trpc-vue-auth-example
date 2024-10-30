@@ -20,10 +20,11 @@
     "env-var": "^7.5.0"
   },
   "devDependencies": {
-    "@types/express": "^5.0.0",
+    "z-limit": "workspace:*",
     "db-limit": "workspace:*",
+    "redis-limit": "workspace:*",
+    "@types/express": "^5.0.0",
     "tsx": "^4.19.1",
-    "typescript": "5.5.4",
-    "z-limit": "workspace:*"
+    "typescript": "5.5.4"
   }
 }
