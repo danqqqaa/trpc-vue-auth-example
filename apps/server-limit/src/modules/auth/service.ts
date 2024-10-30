@@ -1,8 +1,8 @@
 import { registerSchemaType, loginSchemaType } from "z-limit";
-import { db, user, eq } from "db-limit";
+import { db, eq ,user } from "db-limit";
 import { jwtConfig } from "../../config";
 // import { TRPCError } from "@trpc/server";
-import { SignJWT, importPKCS8, importSPKI, jwtVerify } from "jose";
+import { SignJWT, exportPKCS8, exportSPKI, generateKeyPair, importPKCS8, importSPKI, jwtVerify } from "jose";
 
 export class AuthService {
   public async register(dto: registerSchemaType) {
@@ -19,10 +19,14 @@ export class AuthService {
 
         // const newUser = await tx.insert(user).values(dto).returning();
         // console.log(tempUser);
-        const test = await this.generateToken(tempUser.id);
-        console.log(test);
-        this.verifyRefresh(test.refresh);
-        return this.generateToken(tempUser.id);
+        // this.generateKeys()
+
+        
+       const test = await this.generateToken(tempUser.id);
+       console.log(test);
+       
+        // this.verifyRefresh(test.refresh);
+        // return this.generateToken(tempUser.id);
       } catch (error) {
         console.log(error);
         tx.rollback();
@@ -30,29 +34,36 @@ export class AuthService {
     });
   }
 
-  public async login(dto: loginSchemaType) {}
+  public async login(dto: loginSchemaType) {
+    const loggedUser = await db.select().from(user).where(eq(user.login, dto.login));
+    
+    if (!loggedUser.length) {
+      throw new Error("Пользователь не найден");
+    }
+    return loggedUser
+  }
 
   public async generateToken(userId: number) {
     const refresh = await this.signRefresh(userId);
     const access = await this.signAccess(userId);
-
     return { refresh, access };
   }
 
   public async signRefresh(userId: number) {
+
     const secret = await importPKCS8(
       this.refreshPrivateKey,
       jwtConfig.algorithm
     );
-
+    
     return new SignJWT()
       .setProtectedHeader({ alg: jwtConfig.algorithm })
-      .setSubject(userId.toString())
-      .setIssuedAt()
+      .setSubject(userId.toString()) 
       .setExpirationTime(jwtConfig.refreshExpiresTime)
       .sign(secret);
   }
   public async signAccess(userId: number) {
+
     const secret = await importPKCS8(
       this.accessPrivateKey,
       jwtConfig.algorithm
@@ -61,44 +72,54 @@ export class AuthService {
     return new SignJWT()
       .setProtectedHeader({ alg: jwtConfig.algorithm })
       .setSubject(userId.toString())
-      .setIssuedAt()
       .setExpirationTime(jwtConfig.accessExpiresTime)
       .sign(secret);
   }
 
   public async verifyRefresh(refresh: string) {
+    console.log(this.refreshPrivateKey);
     
-    const spki =  await importSPKI(
-      this.refreshPublicKey, 
-      jwtConfig.algorithm
-    )
+    const spki = await importPKCS8(this.refreshPublicKey, jwtConfig.algorithm);
     const verified = await jwtVerify(refresh, spki, {
       algorithms: [jwtConfig.algorithm],
     });
-    
+
     console.log(verified);
-    
   }
 
-
-
   public async verifyAccess(access: string) {
-    
-
-    
-    const spki =  await importSPKI(
-      this.accessPublicKey, 
-      jwtConfig.algorithm
-    )
-
+    const spki = await importSPKI(this.accessPublicKey, jwtConfig.algorithm);
     const verified = await jwtVerify(access, spki, {
       algorithms: [jwtConfig.algorithm],
     });
 
     console.log(verified);
-    
   }
 
+// @ts-ignore
+  private async generateKeys() {
+    const { publicAccess, privateAccess } = await this.generateAccessKeys();
+    const { publicRefresh, privateRefresh } = await this.generateRefreshKeys();
+
+    return { publicAccess , privateAccess, publicRefresh, privateRefresh };
+  }
+
+  private async generateAccessKeys() {
+    const { publicKey, privateKey } = await generateKeyPair(jwtConfig.algorithm)
+    const publicAccess = await exportSPKI(publicKey);
+    const privateAccess = await exportPKCS8(privateKey);
+    
+    return { publicAccess, privateAccess };
+  }
+
+  private async generateRefreshKeys() {
+    const { publicKey, privateKey } = await generateKeyPair(jwtConfig.algorithm);
+
+    const publicRefresh = await exportSPKI(publicKey);
+    const privateRefresh = await exportPKCS8(privateKey);
+
+    return { publicRefresh, privateRefresh };
+  }
   private get refreshPrivateKey() {
     return `-----BEGIN PRIVATE KEY-----\n${jwtConfig.refreshPrivateKey}\n-----END PRIVATE KEY-----`;
   }
