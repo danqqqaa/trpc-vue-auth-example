@@ -1,17 +1,15 @@
 import { useTRPC } from '@/shared/composables/use-trpc'
 import { loginSchema, loginSchemaType } from 'z-limit'
 import { ValidateSchemas } from '@/shared/validate-schemas'
-import { AuthService } from '@/shared/services/auth-service'
-
-export async function useLogin(props: loginSchemaType, useAuthService: AuthService) {
+import { useAuthStore } from '@/shared/stores/auth-store'
+export async function useLogin(props: loginSchemaType) {
   ValidateSchemas(loginSchema, props)
   const trpc = useTRPC()
-
+  const authStore = useAuthStore()
   try {
-
     const login = await trpc.auth.login.mutate(props)
     if (login) {
-      useAuthService.setTokens(login.refresh, login.access)
+      authStore.setTokens(login.refresh, login.access)
     }
   } catch (error) {
     console.log(error)

@@ -1,16 +1,14 @@
 import './styles/global.css'
-
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from '@/shared/router'
-import { useProvideAuthService } from '@/shared/composables/use-auth-service'
+import { createPinia } from 'pinia'
 
 const app = createApp(App) 
 
-app.provide('AUTH_SERVICE', useProvideAuthService())
+const pinia = createPinia()
 
-
-app.use(VueQueryPlugin).use(router)
+app.use(VueQueryPlugin).use(pinia).use(router)
 
 app.mount('#app')

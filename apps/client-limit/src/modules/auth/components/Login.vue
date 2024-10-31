@@ -5,17 +5,16 @@
   import Button from '@/shared/ui/button/Button.vue'
   import { Eye, EyeOff } from 'lucide-vue-next'
   import { useLogin } from '../composables/use-login'
-  import { useAuthService } from '@/shared/composables/use-auth-service'
+  
   const passwordVisible = ref(false)
 
-  const useAuthServiceInject = useAuthService()
 
   const loginForm = ref({
     login: '',
     password: ''
   })
 
-  const login = async () => await useLogin(toValue(loginForm), useAuthServiceInject)
+  const login = async () => await useLogin(toValue(loginForm))
 </script>
 
 <template>
