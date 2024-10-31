@@ -4,36 +4,18 @@
   import { ref, toValue } from 'vue'
   import Button from '@/shared/ui/button/Button.vue'
   import { Eye, EyeOff } from 'lucide-vue-next'
-  import { useLogin } from '../composables/use-register'
-  import { loginSchema } from 'z-limit/auth'
-  import { useToast } from '@/shared/ui/toast/use-toast'
-
+  import { useLogin } from '../composables/use-login'
+  import { useAuthService } from '@/shared/composables/use-auth-service'
   const passwordVisible = ref(false)
 
-  const { toast } = useToast()
-
-  const { mutate } = useLogin()
+  const useAuthServiceInject = useAuthService()
 
   const loginForm = ref({
     login: '',
     password: ''
   })
 
-  const login = () => {
-    const parse = loginSchema.safeParse(toValue(loginForm))
-    console.log(parse)
-    if (!parse.success) {
-      const err = parse.error.issues
-      for (let _error of err) {
-        toast({
-          title: 'Ошибка авторизации',
-          description: _error.message,
-          variant: 'destructive',
-          duration: 3000
-        })
-      }
-    } else mutate(toValue(loginForm))
-  }
+  const login = async () => await useLogin(toValue(loginForm), useAuthServiceInject)
 </script>
 
 <template>

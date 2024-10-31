@@ -35,12 +35,13 @@ export class AuthService {
   }
 
   public async login(dto: loginSchemaType) {
-    const loggedUser = await db.select().from(user).where(eq(user.login, dto.login));
+    const [loggedUser] = await db.select().from(user).where(eq(user.login, dto.login));
     
-    if (!loggedUser.length) {
+    if (!loggedUser) {
       throw new Error("Пользователь не найден");
     }
-    return loggedUser
+
+    return this.generateToken(loggedUser.id);
   }
 
   public async generateToken(userId: number) {
@@ -77,7 +78,6 @@ export class AuthService {
   }
 
   public async verifyRefresh(refresh: string) {
-    console.log(this.refreshPrivateKey);
     
     const spki = await importPKCS8(this.refreshPublicKey, jwtConfig.algorithm);
     const verified = await jwtVerify(refresh, spki, {

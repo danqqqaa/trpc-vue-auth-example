@@ -1,5 +1,5 @@
 <script  setup lang="ts">
-import { useTRPC } from '@/trpc-client';
+import { useTRPC } from '@/shared/composables/use-trpc';
 import { useQuery } from '@tanstack/vue-query';
 
 const trpc = useTRPC();
