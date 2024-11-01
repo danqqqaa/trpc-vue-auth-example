@@ -1,8 +1,16 @@
 import { registerSchemaType, loginSchemaType } from "z-limit";
-import { db, eq ,user } from "db-limit";
+import { db, eq, user } from "db-limit";
 import { jwtConfig } from "../../config";
 // import { TRPCError } from "@trpc/server";
-import { SignJWT, exportPKCS8, exportSPKI, generateKeyPair, importPKCS8, importSPKI, jwtVerify } from "jose";
+import {
+  SignJWT,
+  exportPKCS8,
+  exportSPKI,
+  generateKeyPair,
+  importPKCS8,
+  importSPKI,
+  jwtVerify,
+} from "jose";
 
 export class AuthService {
   public async register(dto: registerSchemaType) {
@@ -21,10 +29,9 @@ export class AuthService {
         // console.log(tempUser);
         // this.generateKeys()
 
-        
-       const test = await this.generateToken(tempUser.id);
-       console.log(test);
-       
+        const test = await this.generateToken(tempUser.id);
+        console.log(test);
+
         // this.verifyRefresh(test.refresh);
         // return this.generateToken(tempUser.id);
       } catch (error) {
@@ -35,8 +42,11 @@ export class AuthService {
   }
 
   public async login(dto: loginSchemaType) {
-    const [loggedUser] = await db.select().from(user).where(eq(user.login, dto.login));
-    
+    const [loggedUser] = await db
+      .select()
+      .from(user)
+      .where(eq(user.login, dto.login));
+
     if (!loggedUser) {
       throw new Error("Пользователь не найден");
     }
@@ -51,20 +61,18 @@ export class AuthService {
   }
 
   public async signRefresh(userId: number) {
-
     const secret = await importPKCS8(
       this.refreshPrivateKey,
       jwtConfig.algorithm
     );
-    
+
     return new SignJWT()
       .setProtectedHeader({ alg: jwtConfig.algorithm })
-      .setSubject(userId.toString()) 
+      .setSubject(userId.toString())
       .setExpirationTime(jwtConfig.refreshExpiresTime)
       .sign(secret);
   }
   public async signAccess(userId: number) {
-
     const secret = await importPKCS8(
       this.accessPrivateKey,
       jwtConfig.algorithm
@@ -78,13 +86,13 @@ export class AuthService {
   }
 
   public async verifyRefresh(refresh: string) {
-    
-    const spki = await importPKCS8(this.refreshPublicKey, jwtConfig.algorithm);
+    const spki = await importSPKI(this.refreshPublicKey, jwtConfig.algorithm);
+
     const verified = await jwtVerify(refresh, spki, {
       algorithms: [jwtConfig.algorithm],
     });
 
-    console.log(verified);
+    return verified.payload;
   }
 
   public async verifyAccess(access: string) {
@@ -93,27 +101,40 @@ export class AuthService {
       algorithms: [jwtConfig.algorithm],
     });
 
-    console.log(verified);
+    return verified.payload;
   }
 
-// @ts-ignore
+  public async refreshTokens(refresh: string) {
+    // const { publicAccess , privateAccess, publicRefresh, privateRefresh } = await this.generateKeys()
+    // console.log(publicAccess , privateAccess, publicRefresh, privateRefresh);
+
+    const decodedRefresh = await this.verifyRefresh(refresh);
+
+    console.log(decodedRefresh);
+  }
+
+  // @ts-ignore
   private async generateKeys() {
     const { publicAccess, privateAccess } = await this.generateAccessKeys();
     const { publicRefresh, privateRefresh } = await this.generateRefreshKeys();
 
-    return { publicAccess , privateAccess, publicRefresh, privateRefresh };
+    return { publicAccess, privateAccess, publicRefresh, privateRefresh };
   }
 
   private async generateAccessKeys() {
-    const { publicKey, privateKey } = await generateKeyPair(jwtConfig.algorithm)
+    const { publicKey, privateKey } = await generateKeyPair(
+      jwtConfig.algorithm
+    );
     const publicAccess = await exportSPKI(publicKey);
     const privateAccess = await exportPKCS8(privateKey);
-    
+
     return { publicAccess, privateAccess };
   }
 
   private async generateRefreshKeys() {
-    const { publicKey, privateKey } = await generateKeyPair(jwtConfig.algorithm);
+    const { publicKey, privateKey } = await generateKeyPair(
+      jwtConfig.algorithm
+    );
 
     const publicRefresh = await exportSPKI(publicKey);
     const privateRefresh = await exportPKCS8(privateKey);

@@ -1,17 +1,29 @@
 import { useTRPC } from '@/shared/composables/use-trpc'
-import { loginSchema, loginSchemaType } from 'z-limit'
-import { ValidateSchemas } from '@/shared/validate-schemas'
-import { useAuthStore } from '@/shared/stores/auth-store'
-export async function useLogin(props: loginSchemaType) {
-  ValidateSchemas(loginSchema, props)
+import { loginSchemaType } from 'z-limit'
+import { useAuthStore } from '@/shared/stores/auth/auth-store'
+import { useRouter } from 'vue-router'
+import { useMutation } from '@tanstack/vue-query'
+import { showToast } from '@/shared/toast'
+
+export function useLogin(props: loginSchemaType) {
+  const router = useRouter()
   const trpc = useTRPC()
   const authStore = useAuthStore()
-  try {
-    const login = await trpc.auth.login.mutate(props)
-    if (login) {
-      authStore.setTokens(login.refresh, login.access)
+
+  return useMutation({
+    mutationKey: ['login'],
+    mutationFn: () => trpc.auth.login.mutate(props),
+    onSuccess: ({refresh, access}) => {
+      authStore.setTokens(refresh, access)
+      router.push('/home')
+    },
+    onError: (err) => {
+      showToast({
+        title: 'Ошибка входа',
+        description: err.message,
+        variant: 'destructive',
+        duration: 3000
+      })
     }
-  } catch (error) {
-    console.log(error)
-  }
+  })
 }
