@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const schema = z
   .object({
-    name: z.string(),
+    login: z.string(),
     password: z
       .string()
       .min(8, { message: 'Минимальная длина пароля 8 символов!' }),

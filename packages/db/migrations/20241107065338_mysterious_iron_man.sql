@@ -1,0 +1,2 @@
+ALTER TABLE "userCredentials" ALTER COLUMN "payload" SET DEFAULT '$2a$10$O.GgZJy/NAXCYhrgCbYlKuoBETWbFbkl93bPj0ePw2UkrPXdjHLT.';--> statement-breakpoint
+ALTER TABLE "userCredentials" ADD COLUMN "default_pass" boolean DEFAULT true;

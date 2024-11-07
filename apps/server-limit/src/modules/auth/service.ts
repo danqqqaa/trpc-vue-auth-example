@@ -1,5 +1,5 @@
 import { registerSchemaType, loginSchemaType } from "z-limit";
-import { db, eq, user } from "db-limit";
+import { db, eq, user, userCredentials } from "db-limit";
 import { jwtConfig } from "../../config";
 // import { TRPCError } from "@trpc/server";
 import {
@@ -12,12 +12,25 @@ import {
   jwtVerify,
 } from "jose";
 import { TRPCError } from "@trpc/server";
+import { hashSync, compareSync } from "bcryptjs";
 
 export class AuthService {
   public async register(dto: registerSchemaType) {
     await db.transaction(async (tx) => {
       try {
-        /// Отсутсвует
+        const [insertedUser] = await tx.insert(user).values({
+          login: dto.login,
+        }).returning()
+        
+        console.log(insertedUser);
+
+        const insertedUserCredentials = await tx.insert(userCredentials).values({
+          user_id: insertedUser.id,
+          payload: hashSync(dto.password),
+        }).returning()
+        
+        console.log(insertedUserCredentials);
+        
       } catch (error) {
         console.log(error);
         tx.rollback();
@@ -32,7 +45,24 @@ export class AuthService {
       .where(eq(user.login, dto.login));
 
     if (!loggedUser) {
-      throw new Error("Пользователь не найден");
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Пользователь не найден",
+      });
+    }
+
+    const [userCred] = await db
+      .select()
+      .from(userCredentials)
+      .where(eq(userCredentials.user_id, loggedUser.id));
+
+    const isValidPass = compareSync(dto.password, userCred.payload);
+
+    if (!isValidPass) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Пароль не подходит",
+      });
     }
 
     return this.generateToken(loggedUser.id);

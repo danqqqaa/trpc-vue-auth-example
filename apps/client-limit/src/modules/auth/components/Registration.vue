@@ -15,7 +15,7 @@
   const { mutate, isError } = useRegister()
 
   const registerForm = ref({
-    name: '',
+    login: '',
     password: '',
     confirmPassword: ''
   })
@@ -41,7 +41,7 @@
   <div class="grid gap-1">
     <div>
       <Label>Имя</Label>
-      <Input v-model="registerForm.name"></Input>
+      <Input v-model="registerForm.login"></Input>
     </div>
     <div class="relative">
       <Label>Пароль</Label>

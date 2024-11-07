@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router'
 export function useRegister() {
     const trpc = useTRPC(); 
     const router = useRouter();
+
     
     return useMutation({
         mutationKey: ['register'],

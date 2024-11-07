@@ -39,6 +39,6 @@
         <EyeOff v-else />
       </Button>
     </div>
-    <Button class="mt-6 w-full" @click="login">Регистрация</Button>
+    <Button class="mt-6 w-full" @click="login">Войти</Button>
   </div>
 </template>
