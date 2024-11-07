@@ -1,13 +1,15 @@
+import { db, user } from "db-limit";
+
 export class UserService {
-  async getUsers(ctx: any): Promise<unknown> {
+  async getUsers(ctx: string | undefined): Promise<unknown> {
     try {
 
-    //   const t = fetch("https://jsonplaceholder.typicode.com/todos/1")
-    //     .then((response) => response.json())
-    //     .then((json) => console.log(json));
+      const users = await db.select().from(user);
 
-      return ctx;
-    } catch (error: any) {
+
+
+      return users;
+    } catch (error) {
       // console.log(error.message);
     }
   }

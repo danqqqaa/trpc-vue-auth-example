@@ -1,12 +1,13 @@
 <script lang="ts" setup>
+import { routesNames } from '@/shared/router';
 
-console.log('layout');
+console.log(routesNames);
 
 </script>
 
 <template>
     <main>
-        <div class="text-2xl bg-red-500 p-4" >21312</div>
+        <div class="" >{{ routesNames }}</div>
     </main>
 
 </template>
