@@ -1,9 +1,10 @@
 <script setup lang="ts">
-const test = '123'
+console.log('imhere');
+
 </script>
 
 <template>
-    <div class="w-full ">
-        {{ test }}
-    </div>
+  <div class="w-full h-screen flex items-center justify-center">
+    312321321
+  </div>
 </template>

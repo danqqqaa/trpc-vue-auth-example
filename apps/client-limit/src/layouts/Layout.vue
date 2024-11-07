@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { routesNames } from '@/shared/router';
+  import { routesNames } from '@/shared/router'
 
-console.log(routesNames);
-
+  console.log(routesNames)
 </script>
 
 <template>
-    <main>
-        <div class="" >{{ routesNames }}</div>
-    </main>
-
+  <main>
+    <div class="w-full h-full">
+        <router-view />
+    </div>
+  </main>
 </template>

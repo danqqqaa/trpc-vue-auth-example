@@ -6,6 +6,5 @@ export const router = [
         component: UserPage,
         name: 'Пользователи',
         onLayout: true
-
     }
 ]
