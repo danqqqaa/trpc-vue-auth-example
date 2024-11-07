@@ -1,12 +1,12 @@
 export class UserService {
-  async getUsers(): Promise<unknown> {
+  async getUsers(ctx: any): Promise<unknown> {
     try {
 
     //   const t = fetch("https://jsonplaceholder.typicode.com/todos/1")
     //     .then((response) => response.json())
     //     .then((json) => console.log(json));
 
-      return {id: 1};
+      return ctx;
     } catch (error: any) {
       // console.log(error.message);
     }

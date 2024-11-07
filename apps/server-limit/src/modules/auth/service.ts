@@ -11,29 +11,13 @@ import {
   importSPKI,
   jwtVerify,
 } from "jose";
+import { TRPCError } from "@trpc/server";
 
 export class AuthService {
   public async register(dto: registerSchemaType) {
     await db.transaction(async (tx) => {
       try {
-        const [tempUser] = await tx
-          .select()
-          .from(user)
-          .where(eq(user.name, dto.name));
-
-        // if (tempUser.length > 0) {
-        //   throw new TRPCError({code: "BAD_REQUEST", message: "Пользователь с таким именем уже существует"});
-        // }
-
-        // const newUser = await tx.insert(user).values(dto).returning();
-        // console.log(tempUser);
-        // this.generateKeys()
-
-        const test = await this.generateToken(tempUser.id);
-        console.log(test);
-
-        // this.verifyRefresh(test.refresh);
-        // return this.generateToken(tempUser.id);
+        /// Отсутсвует
       } catch (error) {
         console.log(error);
         tx.rollback();
@@ -105,12 +89,20 @@ export class AuthService {
   }
 
   public async refreshTokens(refresh: string) {
-    // const { publicAccess , privateAccess, publicRefresh, privateRefresh } = await this.generateKeys()
-    // console.log(publicAccess , privateAccess, publicRefresh, privateRefresh);
-
+    const getExpiresTime = (exp: number) => {
+      return exp * 1000 - Date.now();
+    };
+    // cделать отправку невалидных токенов в redis
     const decodedRefresh = await this.verifyRefresh(refresh);
 
-    console.log(decodedRefresh);
+    if (getExpiresTime(decodedRefresh.exp!) < 0) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Refresh token expired",
+      });
+    }
+
+    return this.generateToken(+decodedRefresh.sub!);
   }
 
   // @ts-ignore

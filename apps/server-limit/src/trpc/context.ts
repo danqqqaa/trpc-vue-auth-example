@@ -1,13 +1,24 @@
-import { inferAsyncReturnType } from '@trpc/server'
-import * as trpcExpress from '@trpc/server/adapters/express'
+import { authService } from "../modules/auth/service";
+import { inferAsyncReturnType } from "@trpc/server";
+import { CreateHTTPContextOptions } from "@trpc/server/adapters/standalone";
 
-const createContext = ({
-  req,
-  res,
-}: trpcExpress.CreateExpressContextOptions) => {
-  return {}
-}
+const createContext = async ({ req }: CreateHTTPContextOptions) => {
+  if (!req.headers.authorization) {
+    return { userId: undefined };
+  }
+  const token = req.headers.authorization.split(" ")[1];
+  try {
+    const payload = await authService.verifyAccess(token);
+    return {
+      userId: payload.sub,
+    };
+  } catch {
+    return {
+      userId: undefined,
+    };
+  }
+};
 
-export type Context = inferAsyncReturnType<typeof createContext>
+export type Context = inferAsyncReturnType<typeof createContext>;
 
-export default createContext
+export default createContext;

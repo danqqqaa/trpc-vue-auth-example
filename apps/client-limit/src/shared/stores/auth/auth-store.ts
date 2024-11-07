@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { jwtDecode, type JwtPayload } from 'jwt-decode'
 import { useAuthService } from '@/shared/composables/use-auth-service'
-import { ref } from 'vue'
 
 const TOKENS = {
   access: 'LIMIT_ACCESS_TOKEN',
@@ -21,19 +20,21 @@ export const useAuthStore = defineStore('auth', {
   }),
 
   actions: {
-    async getToken() {
+    getToken() {
       this.loadTokens()
       if (!this.accessPayload) return undefined
 
       const expireTime = getExpiresTime(this.accessPayload.exp!)
 
-      if (expireTime > 0) {
+      if (expireTime < 0) {
         this.refreshTokens()
       }
+      return this.accessToken
     },
-    refreshTokens() {
+    async refreshTokens() {
       const trpc = useAuthService()
-      trpc.auth.refreshTokens.mutate(this.refreshToken!)
+      const { access, refresh } = await trpc.auth.refreshTokens.mutate(this.refreshToken!)
+      this.setTokens(refresh, access)
     },
     setTokens(refresh: string, access: string) {
       this.accessToken = access
