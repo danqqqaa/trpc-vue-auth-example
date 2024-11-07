@@ -18,19 +18,22 @@ export class AuthService {
   public async register(dto: registerSchemaType) {
     await db.transaction(async (tx) => {
       try {
-        const [insertedUser] = await tx.insert(user).values({
-          login: dto.login,
-        }).returning()
-        
-        console.log(insertedUser);
+        const [insertedUser] = await tx
+          .insert(user)
+          .values({
+            login: dto.login,
+          })
+          .returning();
 
-        const insertedUserCredentials = await tx.insert(userCredentials).values({
-          user_id: insertedUser.id,
-          payload: hashSync(dto.password),
-        }).returning()
-        
+        const insertedUserCredentials = await tx
+          .insert(userCredentials)
+          .values({
+            user_id: insertedUser.id,
+            payload: hashSync(dto.password),
+          })
+          .returning();
+
         console.log(insertedUserCredentials);
-        
       } catch (error) {
         console.log(error);
         tx.rollback();
