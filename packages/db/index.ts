@@ -13,5 +13,5 @@ const pool = new Pool({
 
 export const db = drizzle(pool);
 
-export * from './schema';
+export * from './schemas/schema';
 export * from 'drizzle-orm';

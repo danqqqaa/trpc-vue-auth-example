@@ -18,7 +18,7 @@ export const useAuthStore = defineStore('auth', {
     refreshToken: undefined as string | undefined,
     refreshPayload: undefined as JwtPayload | undefined,
     accessPayload: undefined as JwtPayload | undefined,
-    currentUser: undefined
+    currentUser: undefined as unknown | undefined
   }),
 
   actions: {
@@ -53,6 +53,8 @@ export const useAuthStore = defineStore('auth', {
         this.clearTokens()
       }
     },
+
+
     clearTokens() {
       localStorage.removeItem(TOKENS.refresh)
       localStorage.removeItem(TOKENS.access)
@@ -65,10 +67,7 @@ export const useAuthStore = defineStore('auth', {
     },
     async getCurrentUser () { 
       const trpc = useTRPC()
-
-      const data = await trpc.user.getCurrentUser.query()
-      console.log('data', data);
-      
+      this.currentUser = await trpc.user.getCurrentUser.query()
     }
   }
 })

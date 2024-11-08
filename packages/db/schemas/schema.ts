@@ -9,6 +9,8 @@ export const user = pgTable("users", {
   updated_at: timestamp("updated_at").defaultNow(),
 });
 
+export type UserType = typeof user.$inferSelect
+
 export const typeCredentials = pgEnum('type', ['password'])
 
 export const userCredentials = pgTable('userCredentials', {

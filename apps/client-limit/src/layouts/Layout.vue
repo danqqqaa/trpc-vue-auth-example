@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { pageRoutes } from '@/shared/router'
+  import { sidebarRoutes } from '@/shared/router'
 
 </script>
 
@@ -33,7 +33,7 @@
     >
       <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
         <ul class="space-y-2">
-          <li v-for="route in pageRoutes" :key="route.name">
+          <li v-for="route in sidebarRoutes" :key="route.name">
             <RouterLink
               :to="route.path"
               href="#"

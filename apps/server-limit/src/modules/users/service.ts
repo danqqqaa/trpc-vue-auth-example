@@ -10,8 +10,7 @@ export class UserService {
       // console.log(error.message);
     }
   }
-
-  async getCurrentUser(ctx: number): Promise<unknown> {
+  async getCurrentUser(ctx: number) {
     try {
       const [currentUser] = await db.select().from(user).where(eq(user.id, ctx));
       return currentUser;

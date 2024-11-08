@@ -1,13 +1,16 @@
 <script setup lang="ts">
   import { RouterView } from 'vue-router'
   import Toaster from '@/shared/ui/toast/Toaster.vue'
-  import { onMounted } from 'vue'
   import { useAuthStore } from '@/shared/stores/auth/auth-store'
+  import { router } from '@/shared/router'
 
-  const { getCurrentUser } = useAuthStore()
+  const { currentUser, getCurrentUser } = useAuthStore()
 
-  onMounted(() => {
-    getCurrentUser()
+  getCurrentUser()
+
+  router.beforeEach((to, _, next) => {
+    if (to.name !== 'Авторизация' && !currentUser) next({ name: 'Авторизация' })
+    else next()
   })
 </script>
 
