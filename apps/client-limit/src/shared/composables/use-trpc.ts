@@ -13,7 +13,6 @@ export function useTRPC() {
         async headers() {
           const headers: Record<string, string> = {}
           const token = getToken()
-          console.log(token);
           
           if (token) {
             headers['Authorization'] = `Bearer ${token}`

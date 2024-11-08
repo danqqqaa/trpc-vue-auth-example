@@ -8,13 +8,13 @@ import { showToast } from '@/shared/toast'
 export function useLogin(props: loginSchemaType) {
   const router = useRouter()
   const trpc = useTRPC()
-  const authStore = useAuthStore()
+  const { setTokens } = useAuthStore()
 
   return useMutation({
     mutationKey: ['login'],
     mutationFn: () => trpc.auth.login.mutate(props),
-    onSuccess: ({refresh, access}) => {
-      authStore.setTokens(refresh, access)
+    onSuccess: ({ refresh, access }) => {
+      setTokens(refresh, access)
       router.push('/home')
     },
     onError: (err) => {

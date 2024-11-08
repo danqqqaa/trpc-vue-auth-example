@@ -5,6 +5,6 @@ export const router = [
         path: '/auth',
         component: LoginPage,
         name: 'Авторизация',
-        onLayout: false
+        onLayout: false,
     },
 ]

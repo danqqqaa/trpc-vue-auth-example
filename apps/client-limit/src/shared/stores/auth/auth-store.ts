@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { jwtDecode, type JwtPayload } from 'jwt-decode'
 import { useAuthService } from '@/shared/composables/use-auth-service'
+import { useTRPC } from '@/shared/composables/use-trpc'
 
 const TOKENS = {
   access: 'LIMIT_ACCESS_TOKEN',
@@ -16,7 +17,8 @@ export const useAuthStore = defineStore('auth', {
     accessToken: undefined as string | undefined,
     refreshToken: undefined as string | undefined,
     refreshPayload: undefined as JwtPayload | undefined,
-    accessPayload: undefined as JwtPayload | undefined
+    accessPayload: undefined as JwtPayload | undefined,
+    currentUser: undefined
   }),
 
   actions: {
@@ -60,6 +62,13 @@ export const useAuthStore = defineStore('auth', {
       this.accessToken = localStorage.getItem(TOKENS.access) || undefined
       this.refreshPayload = this.refreshToken ? jwtDecode(this.refreshToken) : undefined
       this.accessPayload = this.accessToken ? jwtDecode(this.accessToken) : undefined
+    },
+    async getCurrentUser () { 
+      const trpc = useTRPC()
+
+      const data = await trpc.user.getCurrentUser.query()
+      console.log('data', data);
+      
     }
   }
 })
