@@ -1,0 +1,17 @@
+{
+  "name": "limit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "pnpm --filter server-limit dev",
+    "client": "pnpm --filter client-limit dev",
+    "dev": "pnpm --filter \"./apps/**\" dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@trpc/server": "^10.45.2"
+  }
+}
